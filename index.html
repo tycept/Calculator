@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>High IQ Calculator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Itim&display=swap');
+    body {
+      background-color: #1a1a1a;
+      font-family: 'Itim', cursive;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    .calculator {
+      background: #2c2c2c;
+      border-radius: 20px;
+      padding: 20px;
+      width: 230px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .calculator-screen {
+      width: 100%;
+      height: 50px;
+      font-size: 22px;
+      border: none;
+      border-radius: 10px;
+      margin-bottom: 15px;
+      padding: 10px;
+      text-align: center;
+      background-color: #111;
+      color: #fff;
+      box-shadow: inset 0 0 5px #000;
+    }
+
+    .calculator-keys {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      width: 100%;
+    }
+
+    .calculator-keys button {
+      height: 50px;
+      font-size: 18px;
+      border: none;
+      border-radius: 10px;
+      background-color: #444;
+      color: white;
+      transition: background-color 0.2s, transform 0.1s;
+    }
+
+    .calculator-keys button.operator {
+      background-color: #f57c00;
+    }
+
+    .calculator-keys button.equals {
+      background-color: #43a047;
+    }
+
+    .calculator-keys button:hover {
+      background-color: #666;
+    }
+
+    .calculator-keys button:active {
+      transform: scale(0.95);
+    }
+
+    .disabled {
+      pointer-events: none;
+      opacity: 0.6;
+    }
+  </style>
+</head>
+<body>
+
+<div class="calculator">
+  <input type="text" class="calculator-screen" id="screen" disabled>
+  <div class="calculator-keys" id="keys">
+    <button>7</button>
+    <button>8</button>
+    <button>9</button>
+    <button class="operator">C</button>
+
+    <button>4</button>
+    <button>5</button>
+    <button>6</button>
+    <button class="operator">-</button>
+
+    <button>1</button>
+    <button>2</button>
+    <button>3</button>
+    <button class="operator">+</button>
+
+    <button>0</button>
+    <button class="operator">%</button>
+    <button class="operator">×</button>
+    <button class="equals operator">=</button>
+  </div>
+</div>
+
+<script src="https://unpkg.com/typeit@8.7.0/dist/index.umd.js"></script>
+<script>
+  const screen = document.getElementById('screen');
+  const keys = document.getElementById('keys');
+  const buttons = document.querySelectorAll('.calculator-keys button');
+  const loveEmojis = ['a car', 'carrot', 'red', 'LSTER', '20 feet'];  
+
+  buttons.forEach(button => {
+    button.addEventListener('click', () => {
+      const value = button.textContent;
+      if (value === '=') {
+        if (screen.value.trim() === '') return; // Do nothing if screen empty
+        animateLove();
+      } else if (value === 'C') {
+        screen.value = '';
+      } else {
+        screen.value += value + ' ';
+      }
+    });
+  });
+
+  function animateLove() {
+    keys.classList.add('disabled');
+    screen.value = '';
+    let percent = 1;
+    const interval = setInterval(() => {
+      if (percent <= 100) {
+        const emoji = loveEmojis[Math.floor(Math.random() * loveEmojis.length)];
+        screen.value = `I think it's ${emoji}`;
+        percent++;
+      } else {
+        clearInterval(interval);
+        new TypeIt("#screen", {
+          strings: [""],
+          speed: 35,
+          cursor: true,
+          afterComplete: () => {
+            setTimeout(() => {
+              screen.value = '';
+              keys.classList.remove('disabled');
+            }, 2000);
+          }
+        }).go();
+      }
+    }, 40);
+  }
+</script>
+
+</body>
+</html>
