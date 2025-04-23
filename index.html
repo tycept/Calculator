@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="google-site-verification" content="1LAvGCtXzwMldMg5ojr8QGqK58UghIxyHsJdHlRrtmo" />
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>High IQ Calculator</title>
@@ -86,12 +85,11 @@
   </div>
 </div>
 
-<script src="https://unpkg.com/typeit@8.7.0/dist/index.umd.js"></script>
 <script>
   const screen = document.getElementById('screen');
   const keys = document.getElementById('keys');
   const buttons = keys.querySelectorAll('button');
-  const funAnswers = ['a car', 'carrot', 'red', 'LSTER', '20 feet', 'sigma', '010', 'idk😭'];
+  const funAnswers = ['a car', 'carrot', 'red', 'LSTER', '20 feet', 'sigma', '010', 'idk'];
 
   buttons.forEach(btn => {
     btn.addEventListener('click', () => {
@@ -110,23 +108,21 @@
 
   function showFunnyAnswer() {
     keys.classList.add('disabled');
-    screen.value = "Thinking...";
-    
-    setTimeout(() => {
-      const emoji = funAnswers[Math.floor(Math.random() * funAnswers.length)];
-      new TypeIt("#screen", {
-        strings: [`I think it's ${emoji}`],
-        speed: 45,
-        cursor: true,
-        waitUntilVisible: true,
-        afterComplete: () => {
-          setTimeout(() => {
-            screen.value = '';
-            keys.classList.remove('disabled');
-          }, 3000);
-        }
-      }).go();
-    }, 1000); // Wait 1 sec before starting the typing effect
+    const randomText = `I think it's ${funAnswers[Math.floor(Math.random() * funAnswers.length)]}`;
+    let i = 0;
+    screen.value = '';
+
+    const typeInterval = setInterval(() => {
+      screen.value += randomText.charAt(i);
+      i++;
+      if (i > randomText.length) {
+        clearInterval(typeInterval);
+        setTimeout(() => {
+          screen.value = '';
+          keys.classList.remove('disabled');
+        }, 3000);
+      }
+    }, 45);
   }
 </script>
 
