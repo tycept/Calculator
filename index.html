@@ -7,71 +7,7 @@
   <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Itim&display=swap" rel="stylesheet" />
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: 'Itim', cursive;
-      background: #1a1a1a;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
-
-    .calculator {
-      background: #2c2c2c;
-      border-radius: 20px;
-      padding: 20px;
-      width: 250px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.5);
-      text-align: center;
-    }
-
-    .calculator input {
-      width: 100%;
-      height: 50px;
-      border: none;
-      border-radius: 10px;
-      margin-bottom: 15px;
-      font-size: 20px;
-      background: #111;
-      color: white;
-      text-align: center;
-      box-shadow: inset 0 0 8px #000;
-    }
-
-    .buttons {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
-    }
-
-    button {
-      height: 50px;
-      border: none;
-      border-radius: 10px;
-      font-size: 18px;
-      background: #444;
-      color: white;
-      transition: 0.2s;
-    }
-
-    button:hover {
-      background: #555;
-    }
-
-    button:active {
-      transform: scale(0.95);
-    }
-
-    .operator { background: #f57c00; }
-    .equals { background: #43a047; }
-    .disabled {
-      pointer-events: none;
-      opacity: 0.5;
-    }
-  </style>
+  <link rel="stylesheet" href="calc.css" />
 </head>
 <body>
 
@@ -85,46 +21,7 @@
   </div>
 </div>
 
-<script>
-  const screen = document.getElementById('screen');
-  const keys = document.getElementById('keys');
-  const buttons = keys.querySelectorAll('button');
-  const funAnswers = ['a car', 'carrot', 'red', 'LSTER', '20 feet', 'sigma', '010', 'idk'];
-
-  buttons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const val = btn.textContent;
-
-      if (val === 'C') {
-        screen.value = '';
-      } else if (val === '=') {
-        if (screen.value.trim() === '') return;
-        showFunnyAnswer();
-      } else {
-        screen.value += val + ' ';
-      }
-    });
-  });
-
-  function showFunnyAnswer() {
-    keys.classList.add('disabled');
-    const randomText = `I think it's ${funAnswers[Math.floor(Math.random() * funAnswers.length)]}`;
-    let i = 0;
-    screen.value = '';
-
-    const typeInterval = setInterval(() => {
-      screen.value += randomText.charAt(i);
-      i++;
-      if (i > randomText.length) {
-        clearInterval(typeInterval);
-        setTimeout(() => {
-          screen.value = '';
-          keys.classList.remove('disabled');
-        }, 3000);
-      }
-    }, 45);
-  }
-</script>
+<script src="calc.js"></script>
 
 </body>
 </html>
